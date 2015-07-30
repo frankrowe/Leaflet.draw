@@ -1815,26 +1815,16 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 	readableDistance: function (distance, isMetric, useFeet) {
 		var distanceStr;
 
-		if (isMetric) {
-			// show metres when distance is < 1km, then show km
-			if (distance > 1000) {
-				distanceStr = (distance  / 1000).toFixed(2) + ' km';
-			} else {
-				distanceStr = Math.ceil(distance) + ' m';
-			}
+		distance *= 1.09361;
+		if (distance > 1760) {
+			distanceStr = (distance / 1760).toFixed(2) + ' miles';
 		} else {
-			distance *= 1.09361;
-
-			if (distance > 1760) {
-				distanceStr = (distance / 1760).toFixed(2) + ' miles';
-			} else {
-				var suffix = ' yd';
-				if (useFeet) {
-					distance = distance * 3;
-					suffix = ' ft';
-				}
-				distanceStr = Math.ceil(distance) + suffix;
+			var suffix = ' yd';
+			if (useFeet) {
+				distance = distance * 3;
+				suffix = ' ft';
 			}
+			distanceStr = Math.ceil(distance) + suffix;
 		}
 
 		return distanceStr;
